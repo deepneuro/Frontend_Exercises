@@ -14,8 +14,8 @@ let text = "Changing this one!";
 // let newColor;
 
 function changeColor(color) {
-  document.getElementById("color1").innerHTML = `${text}`;
-  document.getElementById("color1").style.color = `${color}`;
+  document.getElementById("color2").innerHTML = `${text}`;
+  document.getElementById("color2").style.color = `${color}`;
   document.getElementById("color1").style.background = `${color}`;
   console.log(color)
 }
