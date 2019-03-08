@@ -123,8 +123,7 @@ const numbers = [
 const visited = [];
 const recording = {};
 let maxValue = 1;
-const res = 0;
-let result;
+let res = 0;
 
 function getMostFreq(numbers, visited, recording, maxValue, res) {
   for (let i = 0; i < numbers.length; i++) {
@@ -140,10 +139,12 @@ function getMostFreq(numbers, visited, recording, maxValue, res) {
       }
     }
   }
-return res, maxValue
+  // console.log(res)
+  document.getElementById("results").innerHTML = `The most frequent element is number ${res} with a total of ${maxValue} hits.`;
 }
 
-result, maxValue = getMostFreq(numbers, visited, recording, maxValue, res);
+getMostFreq(numbers, visited, recording, maxValue, res);
 
 document.getElementById("start").innerHTML = 'Hello UNO';
-document.getElementById("results").innerHTML = `The most frequent element is number ${result} with a total of ${maxValue} hits.`;
+// console.log(res)
+// document.getElementById("results").innerHTML = `The most frequent element is number ${res} with a total of ${maxValue} hits.`;
