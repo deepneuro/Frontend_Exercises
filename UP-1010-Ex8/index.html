@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Top 10 Crypto Coins</title>
+    <link
+      href="http://fonts.googleapis.com/css?family=Varela+Round"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <style>
+      form {
+        border-Spacing : 10px;
+      }
+    </style>
+    <style>
+      table, th, td {
+        border: 1px solid black;
+      }
+    </style>
+    <script src="main.js"></script>
+  </head>
+  <body>
+    <div id="demo"></div>
+    <div class="grid-container centered">
+      <div class="grid-100">
+        <div class="contained">
+          <div class="grid-100">
+            <div class="heading">
+              <h1>Crypto Coins</h1>
+              <input type="text" id="searchId" />
+              <input
+                type="button"
+                id="link"
+                value="Search"
+                onClick="main:goTo()"/>
+            </div>
+            <table id="myTable">
+              <tr id="myTr">
+                  <th>Name</th>
+                  <th>Growth</th>
+              </tr>
+            </table>
+          </div>
+          <ul id="coins"></ul>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
