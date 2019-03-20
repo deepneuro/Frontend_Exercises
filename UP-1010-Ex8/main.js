@@ -114,10 +114,6 @@ function myFunction(data) {
 
   myObj.sort(byGrowthDesc);
 
-// ADD MY TREE HERE!!!!
-
-
-
   var table = document.getElementById("myTable");
 
   while (table.children.length > 1) {
@@ -185,135 +181,82 @@ BinarySearchTree.prototype._add = function(value, node, data) {
   }
 };
 
+
 BinarySearchTree.prototype.printTree = function(coinName) {
   if (this.root !== null) {
     this.xArray = [];
-    return this._printTree(this.root, this.xArray, coinName);
+    return this._printTree(this.root, coinName);
   }
 };
 
-BinarySearchTree.prototype._printTree = function(node, xArray) {
+BinarySearchTree.prototype._printTree = function(node, xArray, coinName) {
   if (node !== null) {
-    this._printTree(node.left, xArray);
+    this._printTree(node.left, xArray, coinName);
     xArray.push(node.data.name);
-    this._printTree(node.right, xArray);
+    this._printTree(node.right, xArray, coinName);
   }
   return xArray;
 };
 
-BinarySearchTree.prototype.findX = function(xValue) {
-  // Pequisar todas as moedas com valor maior que X ou valor menor que X
-  if (this.root !== null) {
-    this.xFindArray = [];
-    this._findX(xValue, this.root, this.xFindArray);
-    return this.xFindArray;
-  } else {
-    return [];
-  }
-}
-
-BinarySearchTree.prototype._findX = function(xValue, node, xFindArray) {
-  if (xValue > node.value && node.left !== null) {
-    xFindArray.push(node.data.name);
-    return this._findX(xValue, node.left, xFindArray);
-
-  } else if (xValue < node.value && node.right !== null) {
-    xFindArray.push(node.data.name);
-    return this._findX(xValue, node.right, xFindArray);
-  }
-}
-
-BinarySearchTree.prototype.findMinorY = function(yValue) {
-  // Procurar moedas com valor menor que a moeda Y
-  if (this.root !== null) {
-    this.yMinorArray = [];
-    this._findMinorY(yValue, this.root, this.yMinorArray);
-    return this.yMinorArray;
-  } else {
-    return [];
-  }
-}
-
-BinarySearchTree.prototype._findMinorY = function(yValue, node, yArray) {
-  // Procurar moedas com valor menor que a moeda Y
-
-  // if (node.value === null ) {
-    // return yArray;
-  // } 
-  
-  if (yValue < node.value && node.left !== null) {
-    return this._findMinorY(yValue, node.left, yArray);
-
-  }
-  else if (yValue >= node.value && node.right !== null) {
-    yArray.push(node.data.name);
-    return this._findMinorY(yValue, node.right, yArray);
-  }
-  return yArray;
-}
-
-BinarySearchTree.prototype.findMajorY = function(yValue) {
-  // Procurar moedas com valor maior que a moeda Y
-  if (this.root !== null) {
-    this.yMajorArray = [];
-    this._findMajorY(yValue, this.root, this.yMajorArray);
-    return this.yMajorArray;
-  } else {
-    return [];
-  }
-}
-
-BinarySearchTree.prototype._findMajorY = function(yValue, node, yMajorArray) {
-  // Procurar moedas com valor maior que a moeda Y
-  if (node.value === yValue) {
-    return node.value;
-    }
-
-  else if (yValue < node.value && node.left !== null) {
-    return this._findMajorY(yValue, node.left, yMajorArray);
-
-  } else if (yValue > node.value && node.right !== null) {
-    yMajorArray.push(node.data.name);
-    return this._findMajorY(yValue, node.right, yMajorArray);
-  }
-}
-
-BinarySearchTree.prototype.findValue = function(coinName) {
-  // var res = [];
-  if (this.root !== null) {
-    return this.recurse(this.root);
-    }
-    // return this._findValue(coinName, this.root);
-  else {
-    return [];
-  }
-}
-
-
-BinarySearchTree.prototype.recurse = function(node) {
-  // console.log(node.data.name);
-  console.log(node);
-  if (node.data.name === coinName) {
-    return node.value;
-  }
-  
-  else {
-    if (node.left !== null) {
-    // if (node.left !== null && node.value > node.left.value) {
-      return this.recurse(node.left);
+BinarySearchTree.prototype.getAllCoins = function(coinName) {
+    if (this.root !== null) {
+      this.valueArray = [];
+      return _getAllCoins(this.root, this.valueArray, v);
     }
   
-    else if (node.right !== null) {
-    // else if (node.right !== null && node.value < node.right.value) {
-      return this.recurse(node.right);
-    }
+    function _getAllCoins(node, valueArray) {
+      if (node !== null) {
+        if (node.data.name !== coinName) {
+          valueArray.push(node.data.name);
+          }
+  
+        _getAllCoins(node.left, valueArray);
+        _getAllCoins(node.right, valueArray);
+      }
+      return valueArray;
+    };
+  };
 
-    return undefined;
+BinarySearchTree.prototype.getCoinMinor = function(v) {
+  if (this.root !== null) {
+    this.valueArray = [];
+    return _getCoinMinor(this.root, this.valueArray, v);
   }
-}
+
+  function _getCoinMinor(node, valueArray) {
+    if (node !== null) {
+      if (node.value <= v) {
+        valueArray.push(node.data.name);
+      }
+      _getCoinMinor(node.left, valueArray);
+
+      _getCoinMinor(node.right, valueArray);
+    }
+    return valueArray;
+  };
+};
+
+BinarySearchTree.prototype.getCoinMajor = function(v) {
+  if (this.root !== null) {
+    this.valueArray = [];
+    return _getCoinMajor(this.root, this.valueArray, v);
+  }
+
+  function _getCoinMajor(node, valueArray) {
+    if (node !== null) {
+      if (node.value > v) {
+        valueArray.push(node.data);
+        }
+      _getCoinMajor(node.left, valueArray);
+
+      _getCoinMajor(node.right, valueArray);
+    }
+    return valueArray;
+  };
+};
 
 var dataCoins = loadData();
-console.log(dataCoins.length);
+console.log('number of coins:', dataCoins.length);
 var tree = new BinarySearchTree();
 
 function addToTree(dataCoins) {
@@ -325,31 +268,21 @@ function addToTree(dataCoins) {
 
 addToTree(dataCoins);
 
-var coinName = "Dogecoin";
+var coinName = "Jesus Coin";
 
-// console.log(tree.findValue(coinName))
-// tree.findValue(coinName);
-var v = tree.findValue(coinName);
+console.log('Getting coin Price USD from coinName in Tree..')
+var v = tree.getValue(coinName);
 console.log(v);
-// var v = value.data.price_usd
-console.log('Got the value!',v);
 
-// value = 0.000187;
-// console.log(dataCoins);
-// console.log('Getting all values from tree..')
-// var xFinalArray = tree.printTree();
-// xFinalArray.pop(-1);
-// console.log(xFinalArray);
+console.log('Minor and Major coin values than input coin value..');
+var allCoins = tree.getAllCoins(coinName);
+console.log(allCoins);
 
-console.log('finding value from X coin..')
-var xFindFinalArray = tree.findX(v);
-console.log(xFindFinalArray);
-// var xFindFinalArray = tree.findX(coinName);
+console.log('Minor coin values than input coin value..');
+var minorCoins = tree.getCoinMinor(v);
+console.log(minorCoins);
 
-console.log('Getting inferior values than our Y coin..');
-var yMinorArray = tree.findMinorY(v);
-console.log(yMinorArray);
+console.log('Major coin values than input coin value..');
+var majorCoins = tree.getCoinMajor(v);
+console.log(majorCoins);
 
-// console.log('Getting superior values than our Y coin..');
-// var yFinalMajorArray = tree.findMajorY(v);
-// console.log(yFinalMajorArray);
