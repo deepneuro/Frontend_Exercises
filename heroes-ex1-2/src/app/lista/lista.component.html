@@ -1,0 +1,76 @@
+<ul class="heroes">
+  <div class="box-list" cdkDropList (cdkDropListDropped)="drop($event)">
+    <li *ngFor="let hero of heroes" cdkDrag
+        [class.selected]="hero === selectedHero">
+        <!-- <span class="badge">{{hero.id}}</span> -->
+        <div class="info-container">
+          <span class="info0">
+              <img src="/assets/images/hulk.PNG">
+          </span>
+          <span class="info1">NAME:    
+            <b>{{hero.name}}</b>
+          </span> 
+          <span class="info2">EMAIL:    {{hero.email}}</span> 
+          <span class="info3">PHONE:    {{hero.phone}}</span>
+          <span class="info4">
+            <button class="slds-button slds-button_icon" title="Edit" (click)="onSelect(hero)">
+                <svg class="slds-button__icon" aria-hidden="true">
+                  <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit"></use>
+                </svg>
+            </button>
+            <button class="slds-button slds-button_icon" (click)="onDelete(hero)" title="Delete">
+                <svg class="slds-button__icon" aria-hidden="true">
+                  <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#delete"></use>
+                </svg>
+              </button>
+            </span>
+        </div>
+
+    </li>
+
+  </div>
+</ul>
+
+
+<div *ngIf="selectedHero">
+<!-- <h2 >{{selectedHero.name | uppercase}} Details</h2> -->
+<!-- <div><span>id: </span>{{selectedHero.id}}</div> -->
+<!-- <div>
+  <label>name:
+    <input [(ngModel)]="selectedHero.name" placeholder="name"/>
+    <input [(ngModel)]="selectedHero.email" placeholder="email"/>
+    <input [(ngModel)]="selectedHero.phone" placeholder="phone"/>
+    <span class="button-save">
+        <button class="slds-button slds-button_icon" title="Save">
+            <svg class="slds-button__icon" aria-hidden="true">
+              <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#save"></use>
+            </svg>
+          </button>
+        </span>
+        <span class="button-close">
+            <button class="slds-button slds-button_icon" (click)="closeEdit()"title="Close">
+                <svg class="slds-button__icon" aria-hidden="true">
+                  <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                </svg>
+              </button>
+            </span>
+  </label>
+</div> -->
+
+  <app-forms [herooo]="selectedHero">
+  </app-forms>
+
+
+
+  <!-- <div>
+      [selectedHero.name]="signupForm.get('userData.name').value"
+      [selectedHero.email]="signupForm.get('userData.email').value"
+      [selectedHero.phone]="signupForm.get('userData.phone').value"
+  </div>
+
+  <div>
+      {{hero.name}}
+      {{hero.email}}
+      {{hero.phone}}
+  </div> -->
+</div>

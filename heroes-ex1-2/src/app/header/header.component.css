@@ -1,0 +1,21 @@
+/* You can add global styles to this file, and also import other style files */
+/* Application-wide Styles */
+h1 {
+    color: #000;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 250%;
+  }
+
+h3 {
+  display: inline;
+}
+
+  .nav-buttons {
+    display: flex;
+    float: right;
+    width: 15vw;
+  }
+
+  .btn {
+    background-color: blue;
+  }

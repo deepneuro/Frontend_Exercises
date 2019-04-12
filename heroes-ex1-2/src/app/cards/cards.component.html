@@ -1,0 +1,37 @@
+  <div class="slds-list_horizontal"   cdkDropList
+  cdkDropListOrientation="horizontal"
+  (cdkDropListDropped)="drop($event)">
+    <li *ngFor="let hero of heroes" cdkDrag
+      (click)="onSelect(hero)"
+      [class.selected]="hero === selectedHero">
+      <div class="slds-card">
+        <div class="slds-grid slds-card__header">
+          <div class="my-img">
+                <img src="/assets/images/hulk.PNG">
+        </div>
+
+                <h2 class="slds-truncate" title="Name">
+                  <a
+                    href="javascript:void(0);"
+                    class="slds-card__header-link"
+                    title="Hero Name"
+                  >
+                      <!-- <span class="slds-text-heading_small">{{hero.name}}</span> -->
+                  </a>
+                </h2>
+            <div class="slds-button-group" role="group">
+          </div>
+        </div>
+        <div class="slds-card__body slds-text-heading_small"><span class="name">{{hero.name}}</span></div>
+        <div class="slds-card__body slds-text-heading_small"><span class="email">{{hero.email}}</span></div>
+        <div class="slds-card__body slds-text-heading_small"><span class="phone">{{hero.phone}}</span></div>
+
+      </div>
+    </li>
+  </div>
+
+<div *ngIf="selectedHero" >
+    <app-forms [herooo]="selectedHero">
+      </app-forms>
+</div>
+

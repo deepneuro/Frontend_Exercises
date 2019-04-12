@@ -1,0 +1,7 @@
+{
+  "Hero": [
+    { "id": 1, "name": "Mr. Nice", "email": "user@gmail.com", "phone": "+123 123 123 123"},
+  	{ "id": 2, "name": "Narco", "email": "user@gmail.com", "phone": "+123 123 123 123" },
+  	{ "id": 3, "name": "Bombasto", "email": "user@gmail.com", "phone": "+123 123 123 123" }
+  ]
+}

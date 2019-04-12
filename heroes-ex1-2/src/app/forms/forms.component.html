@@ -1,0 +1,100 @@
+<form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+  <div formGroupName="userData">
+      <div class="slds-form-element__row">
+          <div class="slds-size_2-of-5">
+            <div class="slds-form-element">
+              <label class="slds-form-element__label" for="name">Hero Name</label>
+              <div class="slds-form-element__control">
+                <input 
+                type="text" 
+                id="name" 
+                formControlName="name" 
+                placeholder="name" 
+                class="slds-input"
+                />
+                <span
+                *ngIf="!signupForm.get('userData.name').valid && signupForm.get('userData.name').touched"
+                class="help-block">Please enter a valid name!</span>
+
+                <!-- <span
+                *ngIf="signupForm.get('userData.name').errors['nameIsForbidden']"
+                >Name is forbidden name!</span> -->
+
+              </div>
+            </div>
+          </div>
+      
+          <div class="slds-size_2-of-5">
+              <div class="slds-form-element">
+                <label class="slds-form-element__label" for="email">Email</label>
+                <div class="slds-form-element__control">
+                  <input type="text" id="email" formControlName="email" placeholder="email" class="slds-input" />
+                  <span
+                  *ngIf="!signupForm.get('userData.email').valid && signupForm.get('userData.email').touched"
+                  class="help-block">Please enter a valid email!</span>
+                </div>
+              </div>
+            </div>
+            <div class="slds-size_2-of-5">
+                <div class="slds-form-element">
+                  <label class="slds-form-element__label" for="phone">Phone</label>
+                  <div class="slds-form-element__control">
+                    <input type="text" id="phone" formControlName="phone" placeholder="phone number" class="slds-input" />
+                    <span
+                    *ngIf="!signupForm.get('userData.phone').valid && signupForm.get('userData.phone').touched"
+                    class="help-block">Please enter a valid phone!</span>
+                  </div>
+                </div>
+              </div>
+
+
+              <div formArrayName="hobbies">
+                <h4>Your hobbies</h4>
+                <button class="btn btn-default"
+                type="button"
+                (click)="onAddHobby()">Add Hobby</button>
+
+                <div class="form-group"
+                *ngFor="let hobbyControl of signupForm.get('userData.hobbies').controls; let i = index">
+                  <input type="text" id="hobby" class="form-control" [formControlName]="i">
+                </div>
+              </div>
+
+
+              <span
+              *ngIf="!signupForm.valid && signupForm.touched"
+              class="help-block" id="valid-data">Please enter valid data!</span>
+    </div>
+  
+      <button id="btn-submit-hero-data" class="slds-button slds-button_brand" disabled="disabled" type="submit">Submit</button>
+  </div>
+</form>
+
+
+
+
+<!-- <div *ngIf="selectedHero"> -->
+<!-- <h2 >{{selectedHero.name | uppercase}} Details</h2> -->
+    <!-- <div><span>id: </span>{{selectedHero.id}}</div> -->
+
+<!-- <div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-q col-md-offset-2">
+      <form [formGroup]="signupForm">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" formControlName="username" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="email">email</label>
+          <input type="text" id="email" formControlName="email"  class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="phone">phone</label>
+            <input type="text" id="phone" formControlName="phone" class="form-control">
+        </div>
+        <button class="slds-button slds-button_brand">Submit</button>
+      </form>
+    </div>
+  </div>
+</div> -->

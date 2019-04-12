@@ -1,0 +1,33 @@
+input.ng-invalid.ng-touched  {
+    border: 1px solid red;
+}
+
+label {
+    font-weight: bold;
+    font-size:14pt;
+    margin-top: 0.5em;
+    margin-left: 1em;
+
+}
+
+input {
+    font-size:10pt;
+    margin-top: 0.3em;
+    margin-left: 1em;
+}
+
+span {
+    font-size:10pt;
+    margin-top: 0.3em;
+    margin-left: 1em;
+}
+
+#valid-data {
+    font-size:15pt;
+    margin-top: 0.7em;
+    margin-left: 1em;
+}
+button.slds-button.slds-button_brand {
+    margin-top: 3em;
+    margin-left: 1em;
+}
