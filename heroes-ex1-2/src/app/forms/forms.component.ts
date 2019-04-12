@@ -1,5 +1,5 @@
 import { FormGroup, FormControl, Validators, FormArray, FormBuilder } from '@angular/forms';
-import { Component, OnInit, Input, Output, EventEmitter, ViewEncapsulation, Injectable } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewEncapsulation, Injectable, ɵConsole } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Hero } from '../hero';
 import { DataService } from './../data.service';
@@ -24,11 +24,13 @@ export class FormsComponent implements OnInit {
   forbiddenUsernames = ['Tiago', 'Ferrao'];
   // heroes = HEROES;
   // @Output() myHero = new EventEmitter<Hero>();
-  heroes = HEROES;
+  // heroes = HEROES;
+  heroes;
   hero: Hero;
   @Input() herooo: {id: number, name: string, email: string, phone: string, hobbies: []};
   @Output() addedHero = new EventEmitter<void>();
-  constructor(private formBuilder: FormBuilder, private dataService: DataService, private router: Router, private route: ActivatedRoute) {}
+  constructor(private formBuilder: FormBuilder, private dataService: DataService, private router: Router, private route: ActivatedRoute) {
+  }
 
   ngOnInit() {
     this.signupForm = new FormGroup( {
@@ -43,7 +45,7 @@ export class FormsComponent implements OnInit {
     this.signupForm.statusChanges.subscribe( function response(status) {
         console.log(status);
         if (status === 'VALID') {
-        (<HTMLInputElement>document.getElementById('btn-submit-hero-data')).disabled = false;
+          (<HTMLInputElement>document.getElementById('btn-submit-hero-data')).disabled = false;
         } else {
           (<HTMLInputElement>document.getElementById('btn-submit-hero-data')).disabled = true;
         }
@@ -57,17 +59,14 @@ export class FormsComponent implements OnInit {
       this.herooo.email = this.signupForm.get('userData.email').value;
       this.herooo.phone = this.signupForm.get('userData.phone').value;
       this.herooo.hobbies = this.signupForm.get('userData.hobbies').value;
-      console.log(this.herooo);
-      this.signupForm.reset();
-      console.log(this.herooo);
-    } else {
-      const data = this.dataService.onloadData('http://localhost:4200/Hero')
-      console.log(data);
 
-      this.dataService.addRowApi(this.signupForm, 'http://localhost:4200/Hero');
-      const data1 = this.dataService.onloadData('http://localhost:4200/Hero')
-      console.log(data1);
-      this.router.navigate(['/lista']);
+      this.signupForm.reset();
+      this.dataService.editApiRow(this.herooo, 'http://localhost:4200/Hero/', this.herooo.id);
+      this.heroes = this.dataService.onloadData('http://localhost:4200/Hero');
+    } else {
+        this.dataService.addRowApi(this.signupForm, 'http://localhost:4200/Hero');
+        this.heroes = this.dataService.onloadData('http://localhost:4200/Hero');
+        this.router.navigate(['/lista']);
     }
   }
 

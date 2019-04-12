@@ -20,7 +20,6 @@ export class ListaComponent implements OnInit {
   myHero: [{id: number, name: string, email: string, phone: string}]
   constructor(private router: Router, private dataService: DataService) {
     this.heroes = dataService.onloadData('http://localhost:4200/Hero');
-
    }
 
   ngOnInit() {
@@ -34,8 +33,11 @@ export class ListaComponent implements OnInit {
   onDelete(hero: Hero) {
     for (let i = 0; i < this.heroes.length; i++) {
       if (this.heroes[i] === hero) {
-        this.heroes.splice(i, 1);
-        }
+        // this.heroes.splice(i, 1);
+        console.log(this.heroes[i].id);
+        this.dataService.deleteRowAPI('http://localhost:4200/Hero/', this.heroes[i].id);
+        this.heroes = this.dataService.onloadData('http://localhost:4200/Hero');
+      }
     }
   }
 
