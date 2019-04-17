@@ -1,34 +1,19 @@
+import { Hero } from './../../hero';
+import { DataService } from './../../data.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { HEROES } from '../../mock-heroes';
-import { Hero } from '../../hero';
-
-
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
-  styleUrls: ['./form.component.css']
+  styleUrls: ['./form.component.css'],
+  providers:[DataService]
 })
 export class FormComponent implements OnInit {
-  form: {id: number};
-  heroes = HEROES;
   hero: Hero;
-
-  constructor(private route: ActivatedRoute) { }
+  data: Hero;
+  constructor(private dataService: DataService) { }
 
   ngOnInit() {
-    this.form = {
-      id: this.route.snapshot.params['id']
-    };
-    console.log(this.form);
-
-
-    for (let i = 0; i < this.heroes.length; i++) {
-      if (this.heroes[i].id === this.form.id) {
-        this.hero = this.heroes[i];
-        console.log(this.hero);
-        }
-    }
+    this.hero = this.dataService.onloadData('http://localhost:4200/Hero');
   }
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Hero } from '../hero';
 import { HEROES } from '../mock-heroes';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
@@ -17,6 +17,7 @@ export class ListaComponent implements OnInit {
   closeForm = false;
   heroes;
   selectedHero: Hero;
+  @Input() herooo: {id: number, name: string, email: string, phone: string, hobbies: []};
   myHero: [{id: number, name: string, email: string, phone: string}]
   constructor(private router: Router, private dataService: DataService) {
     this.heroes = dataService.onloadData('http://localhost:4200/Hero');

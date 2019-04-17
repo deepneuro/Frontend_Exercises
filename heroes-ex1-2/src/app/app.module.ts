@@ -1,4 +1,4 @@
-import { ActivatedRoute } from '@angular/router';
+// import { ActivatedRoute } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -9,12 +9,13 @@ import { AppComponent } from './app.component';
 import { ListaComponent } from './lista/lista.component';
 import { CardsComponent } from './cards/cards.component';
 import { AppRoutingModule } from './app-routing.module';
-import { HeroesStartComponent } from './heroes-start/heroes-start.component';
 import { FormsComponent } from './forms/forms.component';
-import { ServerElementComponent } from './server-element/server-element.component';
 import { HeaderComponent } from './header/header.component';
 import { DataService } from './data.service';
+import { RouterModule } from '@angular/router';
 import { FormComponent } from './forms/form/form.component';
+
+
 
 
 
@@ -24,11 +25,9 @@ import { FormComponent } from './forms/form/form.component';
     AppComponent,
     ListaComponent,
     CardsComponent,
-    HeroesStartComponent,
     FormsComponent,
-    ServerElementComponent,
     HeaderComponent,
-    FormComponent
+    FormComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,9 +35,11 @@ import { FormComponent } from './forms/form/form.component';
     DragDropModule,
     AppRoutingModule,
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule
   ],
   providers: [DataService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [ RouterModule ]
 })
 export class AppModule { }

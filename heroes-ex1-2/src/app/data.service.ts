@@ -3,6 +3,8 @@ import { Input } from '@angular/core';
 import { HEROES } from './mock-heroes';
 import { stringify } from '@angular/core/src/render3/util';
 import { Hero } from './hero';
+import { reject } from 'q';
+import { resolve } from 'url';
 
 
 export class DataService {
@@ -59,9 +61,6 @@ export class DataService {
         //       }
         //   }
 
-
-
-
         const xhr = new XMLHttpRequest();
         xhr.onload  = function() {
                 const users = JSON.parse(xhr.responseText);
@@ -92,4 +91,13 @@ export class DataService {
         };
         xhr.send(json);
     }
+
+    // getDetails() {
+    //     const resultPromise = new Promise(( resolve, reject => {
+    //         setTimeout( () => {
+    //             resolve('Data');
+    //         }, 1500);
+    //         })
+    //     return resultPromise;)
+    // }
 }

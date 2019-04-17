@@ -7,6 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { HEROES } from '../mock-heroes';
 
 
+
 @Component({
   selector: 'app-forms',
   templateUrl: './forms.component.html',
@@ -18,28 +19,28 @@ import { HEROES } from '../mock-heroes';
 @Injectable()
 
 export class FormsComponent implements OnInit {
-
   statusUpdated = new EventEmitter<string>();
   @Input() signupForm: FormGroup;
-  forbiddenUsernames = ['Tiago', 'Ferrao'];
   // heroes = HEROES;
   // @Output() myHero = new EventEmitter<Hero>();
   // heroes = HEROES;
   heroes;
   hero: Hero;
   @Input() herooo: {id: number, name: string, email: string, phone: string, hobbies: []};
-  @Output() addedHero = new EventEmitter<void>();
   constructor(private formBuilder: FormBuilder, private dataService: DataService, private router: Router, private route: ActivatedRoute) {
   }
 
   ngOnInit() {
+    this.heroes = this.dataService.onloadData('http://localhost:4200/Hero');
+
     this.signupForm = new FormGroup( {
       'userData': new FormGroup({
         // 'name': new FormControl(null, [Validators.required, this.forbiddenNames.bind(this)]),
-        'name': new FormControl(null, Validators.required),
+        'name': new FormControl(null, Validators.required, this.forbiddenNames),
         'email': new FormControl(null, [Validators.required, Validators.email], this.forbiddenEmails),
-        'phone': new FormControl(null, Validators.required),
-        'hobbies': new FormArray([])
+        'phone': new FormControl(null, Validators.required, this.phoneSize),
+        'hobbies': new FormArray([]),
+        // 'id': new FormArray()
       }),
     });
     this.signupForm.statusChanges.subscribe( function response(status) {
@@ -51,10 +52,13 @@ export class FormsComponent implements OnInit {
         }
       }
     );
+    // console.log(this.signupForm);
   }
 
   onSubmit() {
     if (this.herooo) {
+      console.log('submiting..');
+      console.log(this.signupForm);
       this.herooo.name = this.signupForm.get('userData.name').value;
       this.herooo.email = this.signupForm.get('userData.email').value;
       this.herooo.phone = this.signupForm.get('userData.phone').value;
@@ -64,6 +68,8 @@ export class FormsComponent implements OnInit {
       this.dataService.editApiRow(this.herooo, 'http://localhost:4200/Hero/', this.herooo.id);
       this.heroes = this.dataService.onloadData('http://localhost:4200/Hero');
     } else {
+        console.log('not submited!');
+
         this.dataService.addRowApi(this.signupForm, 'http://localhost:4200/Hero');
         this.heroes = this.dataService.onloadData('http://localhost:4200/Hero');
         this.router.navigate(['/lista']);
@@ -76,24 +82,58 @@ export class FormsComponent implements OnInit {
     (<FormArray>this.signupForm.get('userData.hobbies')).push(control);
   }
 
-  forbiddenNames(control: FormControl): {[s: string]: boolean} {
-    if (this.forbiddenUsernames.indexOf(control.value) !== -1) {
-      return {'nameIsForbidden': true};
-    }
-    return {'nameIsForbidden': false};
+  forbiddenNames(control: FormControl): Promise<any> | Observable<any> {
+    const promise = new Promise<any>((resolve, reject) => {
+      setTimeout(() => {
+        const forbiddenUsernames = ['tiago', 'ferrao'];
+        if (control.value !== null) {
+          const myInputValue = control.value.toLowerCase();
+          if (forbiddenUsernames.indexOf(myInputValue) !== -1) {
+            resolve({'emailIsForbidden': true});
+          } else {
+            resolve(null);
+          }
+        } else {
+            resolve(null);
+        }
+      }, 1000);
+    });
+    return promise;
   }
 
   forbiddenEmails(control: FormControl): Promise<any> | Observable<any> {
     const promise = new Promise<any>((resolve, reject) => {
       setTimeout(() => {
-        if (control.value === 'test@test.com') {
-          resolve({'emailIsForbidden': true});
+        if (control.value !== null) {
+          if (control.value === 'test@test.com') {
+            resolve({'emailIsForbidden': true});
+          } else {
+            resolve(null);
+          }
         } else {
           resolve(null);
-
         }
-      }, 1500);
+      }, 1000);
     });
     return promise;
   }
+
+  phoneSize(control: FormControl): Promise<any> | Observable<any> {
+    const promise = new Promise<any>((resolve, reject) => {
+      setTimeout(() => {
+        if (control.value !== null) {
+          if (control.value.length > 13) {
+            resolve({'phoneIsForbidden': true});
+          } else {
+            resolve(null);
+          }
+        } else {
+          resolve(null);
+        }
+      }, 1000);
+    });
+    return promise;
+  }
+
+
 }
